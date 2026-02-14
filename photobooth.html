@@ -28,8 +28,9 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
+            min-height: 100svh;
             overflow-x: hidden;
             overflow-y: auto;
             user-select: none;
@@ -117,9 +118,12 @@
 
         /* --- Landing Page --- */
         #screen-landing {
-            gap: 10px;
-            min-height: 0;
+            gap: clamp(4px, 1vh, 10px);
+            min-height: 100vh;
+            min-height: 100svh;
             justify-content: center;
+            box-sizing: border-box;
+            padding: clamp(4px, 1vh, 10px) 0;
         }
 
         .valentine-header {
@@ -189,7 +193,7 @@
             border-radius: 14px;
             padding: 10px;
             flex: 1;
-            min-height: 220px;
+            min-height: clamp(180px, 28vh, 240px);
             position: relative;
             background: rgba(255,255,255,0.9);
         }
@@ -210,7 +214,7 @@
 
         .strip {
             width: 24px;
-            height: 90px;
+            height: clamp(60px, 10vh, 90px);
             border: 2px solid var(--pink-mid);
             border-radius: 4px;
             background:
@@ -239,10 +243,10 @@
 
         .coin-slot {
             width: 46px;
-            height: 68px;
+            height: clamp(50px, 8vh, 68px);
             border: 2px solid var(--pink-mid);
             border-radius: 10px;
-            margin: 10px auto 0;
+            margin: 8px auto 0;
             position: relative;
             background: linear-gradient(180deg, var(--pink-pale), var(--blush));
         }
@@ -272,10 +276,10 @@
         /* Drop coin box */
         .drop-coin-slot {
             width: 46px;
-            height: 68px;
+            height: clamp(50px, 8vh, 68px);
             border: 2px solid var(--pink-mid);
             border-radius: 10px;
-            margin: 10px auto 0;
+            margin: 8px auto 0;
             position: relative;
             background: linear-gradient(180deg, var(--pink-pale), var(--blush));
             cursor: pointer;
