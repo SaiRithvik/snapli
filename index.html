@@ -749,25 +749,19 @@
 
         /* Corner decorations removed to avoid overlap with content */
 
-        /* === ENVELOPE SCREEN (fixed fullscreen overlay) === */
+        /* === ENVELOPE SCREEN === */
         #screen-envelope {
-            position: fixed;
-            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100svh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            background: linear-gradient(160deg, #fff0f5 0%, #fce4ec 30%, #f8bbd0 70%, #f48fb1 100%);
-            overflow: hidden;
         }
 
-        /* Prevent body scroll while envelope is visible */
-        body.envelope-open {
-            overflow: hidden !important;
-            height: 100vh;
-            height: 100svh;
-        }
+        /* Hide #app while envelope is showing */
+        #app.hidden { display: none !important; }
 
         .envelope-wrapper {
             display: flex;
@@ -907,7 +901,7 @@
         }
     </style>
 </head>
-<body class="envelope-open">
+<body>
 
 <!-- Floating Hearts Background -->
 <div class="floating-hearts" id="floating-hearts"></div>
@@ -939,7 +933,7 @@
     </div>
 </div>
 
-<div id="app">
+<div id="app" class="hidden">
 
     <div id="screen-landing" class="screen">
         <div class="valentine-header">💕 Happy Valentine's Day 💕</div>
@@ -1141,9 +1135,9 @@
     }
 
     function goToPhotobooth() {
-        // Hide the envelope overlay and restore body scroll
+        // Hide envelope, show app
         document.getElementById('screen-envelope').style.display = 'none';
-        document.body.classList.remove('envelope-open');
+        document.getElementById('app').classList.remove('hidden');
         showScreen('landing');
     }
 
