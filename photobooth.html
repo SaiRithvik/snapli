@@ -66,7 +66,7 @@
             text-align: center;
             position: relative;
             z-index: 1;
-            padding: 20px 10px;
+            padding: 10px 10px;
         }
 
         .screen {
@@ -117,16 +117,16 @@
 
         /* --- Landing Page --- */
         #screen-landing {
-            gap: 18px;
-            min-height: 80vh;
+            gap: 10px;
+            min-height: 0;
             justify-content: center;
         }
 
         .valentine-header {
             font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
             color: var(--pink-dark);
-            margin-bottom: -6px;
+            margin-bottom: -4px;
             letter-spacing: 6px;
             text-align: center;
             text-shadow: 1px 1px 4px rgba(214,51,132,0.2);
@@ -141,7 +141,7 @@
             border: 3px solid var(--pink-dark);
             border-radius: 22px;
             box-shadow: 4px 6px 20px rgba(214,51,132,0.18);
-            padding: 20px;
+            padding: 14px;
             position: relative;
         }
 
@@ -162,12 +162,12 @@
         }
 
         .booth-sign {
-            margin: 0 auto 14px;
+            margin: 0 auto 10px;
             display: inline-block;
-            padding: 8px 24px;
+            padding: 6px 22px;
             border: 3px solid var(--pink-dark);
             font-family: 'Dancing Script', cursive;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             letter-spacing: 2px;
             border-radius: 12px;
             background: linear-gradient(135deg, var(--pink-light), var(--rose));
@@ -187,18 +187,18 @@
         .booth-panel {
             border: 3px solid var(--pink-mid);
             border-radius: 14px;
-            padding: 12px;
+            padding: 10px;
             flex: 1;
-            min-height: 260px;
+            min-height: 220px;
             position: relative;
             background: rgba(255,255,255,0.9);
         }
 
         .featured-window {
             border: 2px solid var(--pink-mid);
-            padding: 8px;
+            padding: 6px;
             background: linear-gradient(180deg, #fff 0%, var(--pink-pale) 100%);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             border-radius: 8px;
         }
 
@@ -209,8 +209,8 @@
         }
 
         .strip {
-            width: 26px;
-            height: 110px;
+            width: 24px;
+            height: 90px;
             border: 2px solid var(--pink-mid);
             border-radius: 4px;
             background:
@@ -238,11 +238,11 @@
         }
 
         .coin-slot {
-            width: 50px;
-            height: 80px;
+            width: 46px;
+            height: 68px;
             border: 2px solid var(--pink-mid);
             border-radius: 10px;
-            margin: 14px auto 0;
+            margin: 10px auto 0;
             position: relative;
             background: linear-gradient(180deg, var(--pink-pale), var(--blush));
         }
@@ -271,11 +271,11 @@
 
         /* Drop coin box */
         .drop-coin-slot {
-            width: 50px;
-            height: 80px;
+            width: 46px;
+            height: 68px;
             border: 2px solid var(--pink-mid);
             border-radius: 10px;
-            margin: 14px auto 0;
+            margin: 10px auto 0;
             position: relative;
             background: linear-gradient(180deg, var(--pink-pale), var(--blush));
             cursor: pointer;
@@ -440,13 +440,15 @@
         }
 
         .landing-note {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--pink-dark);
+            margin: 0;
         }
 
         .landing-deco {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             letter-spacing: 6px;
+            margin: 0;
         }
 
         /* --- Camera Page --- */
