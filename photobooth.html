@@ -749,23 +749,24 @@
 
         /* Corner decorations removed to avoid overlap with content */
 
-        /* === ENVELOPE SCREEN (fixed overlay, independent of .screen class) === */
+        /* === ENVELOPE SCREEN (fixed fullscreen overlay) === */
         #screen-envelope {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100svh;
+            inset: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 0;
-            z-index: 100;
+            z-index: 9999;
             background: linear-gradient(160deg, #fff0f5 0%, #fce4ec 30%, #f8bbd0 70%, #f48fb1 100%);
-            margin: 0;
-            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Prevent body scroll while envelope is visible */
+        body.envelope-open {
+            overflow: hidden !important;
+            height: 100vh;
+            height: 100svh;
         }
 
         .envelope-wrapper {
@@ -906,7 +907,7 @@
         }
     </style>
 </head>
-<body>
+<body class="envelope-open">
 
 <!-- Floating Hearts Background -->
 <div class="floating-hearts" id="floating-hearts"></div>
@@ -1140,8 +1141,9 @@
     }
 
     function goToPhotobooth() {
-        // Hide the envelope overlay
+        // Hide the envelope overlay and restore body scroll
         document.getElementById('screen-envelope').style.display = 'none';
+        document.body.classList.remove('envelope-open');
         showScreen('landing');
     }
 
