@@ -751,11 +751,16 @@
 
         /* === ENVELOPE SCREEN === */
         #screen-envelope {
-            min-height: calc(100vh / 0.88);
-            min-height: calc(100svh / 0.88);
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100svh;
             justify-content: center;
             align-items: center;
             gap: 0;
+            z-index: 100;
+            background: linear-gradient(160deg, #fff0f5 0%, #fce4ec 30%, #f8bbd0 70%, #f48fb1 100%);
         }
 
         .envelope-wrapper {
@@ -902,33 +907,33 @@
 <div class="floating-hearts" id="floating-hearts"></div>
 
 
-<div id="app">
+<!-- ENVELOPE SCREEN (outside #app so not affected by scale) -->
+<div id="screen-envelope" class="screen active">
+    <div class="envelope-wrapper">
+        <!-- Envelope (disappears on click) -->
+        <div class="envelope-scene" id="envelope-scene" onclick="openEnvelope()">
+            <div class="envelope-body"></div>
+            <div class="envelope-heart">💗</div>
+        </div>
+        <div class="envelope-hint" id="envelope-hint">tap the envelope 💌</div>
 
-    <!-- ENVELOPE SCREEN (shown first) -->
-    <div id="screen-envelope" class="screen active">
-        <div class="envelope-wrapper">
-            <!-- Envelope (disappears on click) -->
-            <div class="envelope-scene" id="envelope-scene" onclick="openEnvelope()">
-                <div class="envelope-body"></div>
-                <div class="envelope-heart">💗</div>
+        <!-- Message card (appears after envelope disappears) -->
+        <div class="message-card" id="message-card">
+            <div class="letter-text">
+                Happy Valentine's Day Sailiii ❤️<br>
+                I wish I was with you to celebrate 🥺<br>
+                Here's a small gift from me to you 😊<br>
+                I hope you like it!!
             </div>
-            <div class="envelope-hint" id="envelope-hint">tap the envelope 💌</div>
-
-            <!-- Message card (appears after envelope disappears) -->
-            <div class="message-card" id="message-card">
-                <div class="letter-text">
-                    Happy Valentine's Day Sailiii ❤️<br>
-                    I wish I was with you to celebrate 🥺<br>
-                    Here's a small gift from me to you 😊<br>
-                    I hope you like it!!
-                </div>
-                <div class="letter-hearts">💕🧸💗🐼💕</div>
-            </div>
-            <div class="snap-btn-wrapper" id="snap-btn-wrapper">
-                <button class="btn" onclick="goToPhotobooth()">📸 Let's snap some pics!</button>
-            </div>
+            <div class="letter-hearts">💕🧸💗🐼💕</div>
+        </div>
+        <div class="snap-btn-wrapper" id="snap-btn-wrapper">
+            <button class="btn" onclick="goToPhotobooth()">📸 Let's snap some pics!</button>
         </div>
     </div>
+</div>
+
+<div id="app">
 
     <div id="screen-landing" class="screen">
         <div class="valentine-header">💕 Happy Valentine's Day 💕</div>
@@ -1130,6 +1135,8 @@
     }
 
     function goToPhotobooth() {
+        // Hide the envelope overlay
+        document.getElementById('screen-envelope').style.display = 'none';
         showScreen('landing');
     }
 
@@ -1144,7 +1151,6 @@
 
     // --- Elements ---
     const screens = {
-        envelope: document.getElementById('screen-envelope'),
         landing: document.getElementById('screen-landing'),
         camera: document.getElementById('screen-camera'),
         printing: document.getElementById('screen-printing'),
