@@ -149,22 +149,23 @@
             box-shadow: 4px 6px 20px rgba(214,51,132,0.18);
             padding: 14px;
             position: relative;
+            margin-bottom: 10px;
         }
 
         .booth-shell::before {
             content: "🧸";
             position: absolute;
-            top: -18px;
+            bottom: -16px;
             left: 16px;
-            font-size: 1.8rem;
+            font-size: 1.4rem;
         }
 
         .booth-shell::after {
             content: "🐼";
             position: absolute;
-            top: -18px;
+            bottom: -16px;
             right: 16px;
-            font-size: 1.8rem;
+            font-size: 1.4rem;
         }
 
         .booth-sign {
@@ -748,19 +749,7 @@
             font-size: 1.15rem;
         }
 
-        /* --- Cute Corner Decorations --- */
-        .corner-deco {
-            position: fixed;
-            font-size: 2.4rem;
-            z-index: 0;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .corner-deco.tl { top: 12px; left: 14px; }
-        .corner-deco.tr { top: 12px; right: 14px; }
-        .corner-deco.bl { bottom: 12px; left: 14px; }
-        .corner-deco.br { bottom: 12px; right: 14px; }
+        /* Corner decorations removed to avoid overlap with content */
     </style>
 </head>
 <body>
@@ -768,16 +757,11 @@
 <!-- Floating Hearts Background -->
 <div class="floating-hearts" id="floating-hearts"></div>
 
-<!-- Corner Decorations -->
-<div class="corner-deco tl">🧸</div>
-<div class="corner-deco tr">🐼</div>
-<div class="corner-deco bl">🐼</div>
-<div class="corner-deco br">🧸</div>
 
 <div id="app">
 
     <div id="screen-landing" class="screen active">
-        <div class="valentine-header">Happy Valentine's Day 💌</div>
+        <div class="valentine-header">💕 Happy Valentine's Day 💕</div>
         <div class="booth-shell">
             <div class="booth-sign">Snapli</div>
             <div class="booth-body">
