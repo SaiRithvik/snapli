@@ -749,18 +749,23 @@
 
         /* Corner decorations removed to avoid overlap with content */
 
-        /* === ENVELOPE SCREEN === */
+        /* === ENVELOPE SCREEN (fixed overlay, independent of .screen class) === */
         #screen-envelope {
             position: fixed;
-            top: 0; left: 0;
+            top: 0;
+            left: 0;
             width: 100vw;
             height: 100vh;
             height: 100svh;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 0;
             z-index: 100;
             background: linear-gradient(160deg, #fff0f5 0%, #fce4ec 30%, #f8bbd0 70%, #f48fb1 100%);
+            margin: 0;
+            padding: 0;
         }
 
         .envelope-wrapper {
@@ -908,7 +913,7 @@
 
 
 <!-- ENVELOPE SCREEN (outside #app so not affected by scale) -->
-<div id="screen-envelope" class="screen active">
+<div id="screen-envelope">
     <div class="envelope-wrapper">
         <!-- Envelope (disappears on click) -->
         <div class="envelope-scene" id="envelope-scene" onclick="openEnvelope()">
