@@ -765,11 +765,19 @@
             gap: 16px;
         }
 
+        /* The envelope visual */
         .envelope-scene {
             position: relative;
             width: 320px;
             height: 200px;
             cursor: pointer;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .envelope-scene.vanish {
+            opacity: 0;
+            transform: scale(0.6);
+            pointer-events: none;
         }
 
         .envelope-hint {
@@ -777,6 +785,7 @@
             font-size: 1.4rem;
             color: var(--pink-dark);
             animation: hintPulse 2s ease-in-out infinite;
+            transition: opacity 0.4s ease;
         }
 
         @keyframes hintPulse {
@@ -834,7 +843,6 @@
             height: 0;
             z-index: 12;
             transform-origin: bottom center;
-            /* Start closed = rotated 180deg so triangle points down */
             transform: rotateX(180deg);
             transition: transform 0.8s ease;
         }
@@ -848,62 +856,38 @@
             filter: drop-shadow(0 -2px 0 #6b5b4f);
         }
 
-        /* Letter - starts hidden inside envelope */
-        .envelope-letter {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 280px;
+        /* === Message card (centered, hidden by default) === */
+        .message-card {
+            opacity: 0;
+            transform: scale(0.7);
+            pointer-events: none;
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
             background: #fff;
-            border: 2px solid var(--pink-mid);
-            border-radius: 10px;
-            padding: 30px 20px;
+            border: 3px solid var(--pink-mid);
+            border-radius: 18px;
+            padding: 40px 36px 30px;
             text-align: center;
-            z-index: 5;
-            transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s, z-index 0s linear 0.3s;
-            box-shadow: 0 4px 20px rgba(214,51,132,0.15);
+            box-shadow: 0 8px 40px rgba(214,51,132,0.2);
+            max-width: 360px;
+            width: 90%;
         }
 
-        .envelope-letter .letter-text {
+        .message-card.visible {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .message-card .letter-text {
             font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
+            font-size: 2.6rem;
             color: var(--pink-dark);
             line-height: 1.4;
-            opacity: 0;
-            transition: opacity 0.6s ease 1s;
         }
 
-        .envelope-letter .letter-hearts {
-            font-size: 1.4rem;
-            margin-top: 10px;
-            opacity: 0;
-            transition: opacity 0.6s ease 1.2s;
-        }
-
-        /* === OPENED state === */
-        .envelope-scene.opened .envelope-flap {
-            /* Open = back to 0deg, triangle points UP */
-            transform: rotateX(0deg);
-        }
-
-        .envelope-scene.opened .envelope-heart {
-            opacity: 0;
-            transform: translateX(-50%) scale(0.5);
-        }
-
-        .envelope-scene.opened .envelope-letter {
-            /* Slide UP above the envelope, in front */
-            transform: translateX(-50%) translateY(-240px);
-            z-index: 20;
-        }
-
-        .envelope-scene.opened .envelope-letter .letter-text {
-            opacity: 1;
-        }
-
-        .envelope-scene.opened .envelope-letter .letter-hearts {
-            opacity: 1;
+        .message-card .letter-hearts {
+            font-size: 1.6rem;
+            margin-top: 14px;
         }
 
         /* Snap button after letter */
@@ -912,7 +896,7 @@
             transform: translateY(20px);
             transition: opacity 0.6s ease, transform 0.6s ease;
             pointer-events: none;
-            margin-top: 10px;
+            margin-top: 18px;
         }
 
         .snap-btn-wrapper.visible {
@@ -945,22 +929,21 @@
     <!-- ENVELOPE SCREEN (shown first) -->
     <div id="screen-envelope" class="screen active">
         <div class="envelope-wrapper">
+            <!-- Envelope (disappears on click) -->
             <div class="envelope-scene" id="envelope-scene" onclick="openEnvelope()">
-                <!-- Letter (starts inside, slides up when opened) -->
-                <div class="envelope-letter">
-                    <div class="letter-text">I love you Saili</div>
-                    <div class="letter-hearts">💕🧸💗🐼💕</div>
-                </div>
-                <!-- Flap (starts closed/folded down) -->
                 <div class="envelope-flap">
                     <div class="envelope-flap-triangle"></div>
                 </div>
-                <!-- Body (main rectangle, always in front) -->
                 <div class="envelope-body"></div>
-                <!-- Heart seal -->
                 <div class="envelope-heart">💗</div>
             </div>
             <div class="envelope-hint" id="envelope-hint">tap the envelope 💌</div>
+
+            <!-- Message card (appears after envelope disappears) -->
+            <div class="message-card" id="message-card">
+                <div class="letter-text">I love you Saili</div>
+                <div class="letter-hearts">💕🧸💗🐼💕</div>
+            </div>
             <div class="snap-btn-wrapper" id="snap-btn-wrapper">
                 <button class="btn" onclick="goToPhotobooth()">📸 Let's snap some pics!</button>
             </div>
@@ -1148,13 +1131,22 @@
         envelopeOpened = true;
         const scene = document.getElementById('envelope-scene');
         const hint = document.getElementById('envelope-hint');
-        scene.classList.add('opened');
-        hint.style.display = 'none';
 
-        // Show the "Let's snap some pics!" button after letter animates out
+        // Make envelope disappear
+        scene.classList.add('vanish');
+        hint.style.opacity = '0';
+
+        // After envelope fades out, show message card in center
+        setTimeout(() => {
+            scene.style.display = 'none';
+            hint.style.display = 'none';
+            document.getElementById('message-card').classList.add('visible');
+        }, 650);
+
+        // Show the "Let's snap some pics!" button after message appears
         setTimeout(() => {
             document.getElementById('snap-btn-wrapper').classList.add('visible');
-        }, 1400);
+        }, 1300);
     }
 
     function goToPhotobooth() {
