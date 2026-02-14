@@ -748,6 +748,215 @@
         }
 
         /* Corner decorations removed to avoid overlap with content */
+
+        /* === ENVELOPE SCREEN === */
+        #screen-envelope {
+            min-height: 100vh;
+            min-height: 100svh;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+        }
+
+        .envelope-scene {
+            position: relative;
+            width: 300px;
+            height: 220px;
+            cursor: pointer;
+            perspective: 800px;
+            margin-bottom: 20px;
+        }
+
+        .envelope-hint {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: var(--pink-dark);
+            opacity: 0.8;
+            animation: hintPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Envelope body */
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(180deg, #f5e6d3 0%, #ece0d1 100%);
+            border: 3px solid #6b5b4f;
+            border-radius: 4px 4px 10px 10px;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        /* V-shape lines on envelope front */
+        .envelope-body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                linear-gradient(to bottom right, transparent 49.5%, #9b8b7a 49.5%, #9b8b7a 50.5%, transparent 50.5%),
+                linear-gradient(to bottom left, transparent 49.5%, #9b8b7a 49.5%, #9b8b7a 50.5%, transparent 50.5%);
+            opacity: 0.35;
+        }
+
+        /* Heart seal */
+        .envelope-heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.8rem;
+            z-index: 5;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            transition: transform 0.4s ease;
+        }
+
+        .envelope-scene:hover .envelope-heart {
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+
+        /* Envelope flap (top triangle) */
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            z-index: 3;
+            transform-origin: top center;
+            transition: transform 0.8s ease;
+        }
+
+        .envelope-flap-inner {
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #e8d5c0;
+            position: relative;
+        }
+
+        .envelope-flap-inner::after {
+            content: "";
+            position: absolute;
+            top: -100px;
+            left: -150px;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid transparent;
+            /* outline effect */
+            filter: drop-shadow(0 3px 0 #6b5b4f);
+        }
+
+        /* Flap border */
+        .envelope-flap-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 153px solid transparent;
+            border-right: 153px solid transparent;
+            border-top: 102px solid #6b5b4f;
+            z-index: 2;
+            transform-origin: top center;
+            transition: transform 0.8s ease;
+            left: -3px;
+        }
+
+        /* Letter inside */
+        .envelope-letter {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 260px;
+            background: #fff;
+            border: 2px solid var(--pink-mid);
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            z-index: 1;
+            transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(214,51,132,0.15);
+        }
+
+        .envelope-letter .letter-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--pink-dark);
+            line-height: 1.4;
+            opacity: 0;
+            transition: opacity 0.6s ease 0.8s;
+        }
+
+        .envelope-letter .letter-hearts {
+            font-size: 1.4rem;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.6s ease 1s;
+        }
+
+        /* OPENED state */
+        .envelope-scene.opened .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-scene.opened .envelope-flap-border {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-scene.opened .envelope-heart {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .envelope-scene.opened .envelope-letter {
+            transform: translateX(-50%) translateY(-180px);
+        }
+
+        .envelope-scene.opened .envelope-letter .letter-text {
+            opacity: 1;
+        }
+
+        .envelope-scene.opened .envelope-letter .letter-hearts {
+            opacity: 1;
+        }
+
+        /* Snap button after letter */
+        .snap-btn-wrapper {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+            margin-top: 10px;
+        }
+
+        .snap-btn-wrapper.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .snap-btn-wrapper .btn {
+            font-size: 1.5rem;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, var(--rose), var(--red-heart));
+            border-radius: 30px;
+            letter-spacing: 1px;
+        }
+
+        .snap-btn-wrapper .btn:hover {
+            background: linear-gradient(135deg, var(--red-heart), #b71c1c);
+        }
     </style>
 </head>
 <body>
@@ -758,7 +967,32 @@
 
 <div id="app">
 
-    <div id="screen-landing" class="screen active">
+    <!-- ENVELOPE SCREEN (shown first) -->
+    <div id="screen-envelope" class="screen active">
+        <div class="envelope-scene" id="envelope-scene" onclick="openEnvelope()">
+            <!-- Letter (behind envelope) -->
+            <div class="envelope-letter">
+                <div class="letter-text">I love you Saili</div>
+                <div class="letter-hearts">💕🧸💗🐼💕</div>
+            </div>
+            <!-- Flap border (outline) -->
+            <div class="envelope-flap-border"></div>
+            <!-- Flap -->
+            <div class="envelope-flap">
+                <div class="envelope-flap-inner"></div>
+            </div>
+            <!-- Body -->
+            <div class="envelope-body"></div>
+            <!-- Heart seal -->
+            <div class="envelope-heart">💗</div>
+        </div>
+        <div class="envelope-hint" id="envelope-hint">tap the envelope 💌</div>
+        <div class="snap-btn-wrapper" id="snap-btn-wrapper">
+            <button class="btn" onclick="goToPhotobooth()">📸 Let's snap some pics!</button>
+        </div>
+    </div>
+
+    <div id="screen-landing" class="screen">
         <div class="valentine-header">💕 Happy Valentine's Day 💕</div>
         <div class="booth-shell">
             <div class="booth-sign">Snapli</div>
@@ -931,6 +1165,27 @@
         }
     })();
 
+    // --- Envelope Logic ---
+    let envelopeOpened = false;
+
+    function openEnvelope() {
+        if (envelopeOpened) return;
+        envelopeOpened = true;
+        const scene = document.getElementById('envelope-scene');
+        const hint = document.getElementById('envelope-hint');
+        scene.classList.add('opened');
+        hint.style.display = 'none';
+
+        // Show the "Let's snap some pics!" button after letter animates out
+        setTimeout(() => {
+            document.getElementById('snap-btn-wrapper').classList.add('visible');
+        }, 1400);
+    }
+
+    function goToPhotobooth() {
+        showScreen('landing');
+    }
+
     // --- Configuration ---
     const DEFAULT_COUNTDOWN_SECONDS = 5;
     const STRIP_WIDTH = 300;
@@ -942,6 +1197,7 @@
 
     // --- Elements ---
     const screens = {
+        envelope: document.getElementById('screen-envelope'),
         landing: document.getElementById('screen-landing'),
         camera: document.getElementById('screen-camera'),
         printing: document.getElementById('screen-printing'),
@@ -1280,6 +1536,7 @@
         coinDropped = false;
         const slot = document.getElementById('drop-coin-slot');
         if (slot) slot.classList.remove('coin-dropped');
+        // Go back to photobooth landing (not envelope)
         showScreen('landing');
     }
 
